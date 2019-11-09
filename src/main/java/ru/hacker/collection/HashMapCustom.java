@@ -76,16 +76,17 @@ public class HashMapCustom {
     if (entries.size() == 1) {//идеальная ситуация, коллизий нет, в корзине один элемент - просто берем его из связанного списка и все.
       return entries.get(0).value;
     } else {//не очень хорошо, у нас коллизия, нужно что-то делать
-      int found=0;
-      Entry e=entries.get(0);
-      while (!e.key.equals(key))
-      {
-        found++;
-        e=entries.get(found);
-      }
-      return entries.get(found).value;
+
       // TODO: подумайте как здесь сделать поиск нужного ключа, если в процессе добавления у нас возникли коллизии и в одной корзине более одного ключа со своим собственным значением
       // вспомните про контракт поиска по хешу - сначала использует hashCode, потом equals!
+        int found=0;
+        Entry e=entries.get(0);
+        while (!e.key.equals(key))
+        {
+            found++;
+            e=entries.get(found);
+        }
+        return entries.get(found).value;
       }
   }
 }
