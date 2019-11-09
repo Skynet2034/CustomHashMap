@@ -16,7 +16,7 @@ public class Start {
       Car car = new Car(String.valueOf(Math.random()), i);
       //linkedList.add(car);
       carTemp = car;
-      map.put(car, null);
+      map.put(car, String.valueOf(i));
     }
     int count = 0;
     for (int i = 0; i < map.M; i++) {

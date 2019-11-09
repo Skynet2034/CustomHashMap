@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class HashMapCustom {
 
-  public static final int M = 9_999_999;
+  public static final int M = 6_999_999;
 
   public Object[] massiv = new Object[M];
 
@@ -23,12 +23,21 @@ public class HashMapCustom {
 
   public void put(Object key, String value) {
     int index = hash(key);
-    //TODO: добавить проверки, что если по этому индексу есть уже элемент (словили коллизию),
+      //TODO: добавить проверки, что если по этому индексу есть уже элемент (словили коллизию),
     //TODO: то просто добавить новый ключ в уже имеющийся список
     Entry entry = new Entry(key, value);
-    LinkedList<Entry> entries = new LinkedList<>();
-    entries.add(entry);
-    massiv[index] = entries;//один элемент массива - это одна корзина, в которой может хранится несколько Entry из-за коллизий, поэтому, чтобы не потерять значения, используем связанный список, для
+    LinkedList<Entry> entries;
+    if (massiv[index]!=null)
+    {
+      entries=(LinkedList<Entry>) massiv[index];
+      entries.add(entry);
+    }
+    else
+    {
+    entries = new LinkedList<>();
+    entries.add(entry);}
+    massiv[index] = entries;
+    //один элемент массива - это одна корзина, в которой может хранится несколько Entry из-за коллизий, поэтому, чтобы не потерять значения, используем связанный список, для
     //хранения всех ключей, у которых, к сожалению, совпали значения хешей (но по-хорошему, пусть хеши и совпали, но equals должен на таких ключах давать false, иначе все теряет смысл)
   }
 
@@ -67,9 +76,16 @@ public class HashMapCustom {
     if (entries.size() == 1) {//идеальная ситуация, коллизий нет, в корзине один элемент - просто берем его из связанного списка и все.
       return entries.get(0).value;
     } else {//не очень хорошо, у нас коллизия, нужно что-то делать
+      int found=0;
+      Entry e=entries.get(0);
+      while (!e.key.equals(key))
+      {
+        found++;
+        e=entries.get(found);
+      }
+      return entries.get(found).value;
       // TODO: подумайте как здесь сделать поиск нужного ключа, если в процессе добавления у нас возникли коллизии и в одной корзине более одного ключа со своим собственным значением
       // вспомните про контракт поиска по хешу - сначала использует hashCode, потом equals!
-      return null;
-    }
+      }
   }
 }
