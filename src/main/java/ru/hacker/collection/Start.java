@@ -1,49 +1,35 @@
 package ru.hacker.collection;
 
-import java.util.Objects;
+import java.util.LinkedList;
 
 public class Start {
 
   public static void main(String[] args) {
-/*
-    Car car2 = new Car(String.valueOf((9_999_000)), 9_999_000);
 
-    System.out.println((car2.hashCode() &0x7fff_ffff) % 9_999_999);*/
+    HashMapCustom<Car, Integer> map = new HashMapCustom<>();
+for (int i=0; i<5_000_000;i++) {
+  map.put(new Car(String.valueOf(i * 2), i), i * 3);
+}
 
-    HashMapCustom map = new HashMapCustom();
-
-    map.put(new Car("BMW", 1), "Всеволод");
-    map.put(new Car("BMW", 2), "Иван");
-    map.put(new Car("BMW", 3), "Артем Сергеевич");
-
-    System.out.println(map.get(new Car("BMW", 3)));
-
-    // List<Car> linkedList = new LinkedList<>();
-    /*Car carTemp = null;
-    for (int i = 0; i < map.M; i++) {
-      Car car = new Car(String.valueOf(i), i);
-      //linkedList.add(car);
-      carTemp = car;
-      map.put(car, String.valueOf(i));
+int collisions=0;
+int depth=0;
+for (int i=0;i<map.massiv.length;i++)
+{
+  if (map.massiv[i]!=null)
+  {
+   LinkedList item=(LinkedList)map.massiv[i];
+    int n=item.size();
+    if (n>1)
+    {
+      collisions+=n-1;
+      if ((n-1)>depth) depth=n-1;
     }
-    int M = 9_999_999;
-    int count = 0;
-    for (int i = 0; i < M; i++) {
-      if (map.massiv[i] == null) {
-        count++;
-      }
-    }
-    System.out.println("Коллизий = " + count);
-    System.out.println(String.format("Оригинал - %s", carTemp));
-    long time = System.currentTimeMillis();
-    System.out.println(String.format("Найденное значение - %s", map.get(carTemp)));
-    System.out.println(String.format("Поиск в мс на map - %s", System.currentTimeMillis() - time));*/
-/*
-    System.out.println(String.format("Оригинал - %s", carTemp));
-    time = System.currentTimeMillis();
-    System.out.println(String.format("Найденное значение - %s", linkedList.contains(carTemp)));
-    System.out.println(String.format("Поиск в мс на linkedList - %s", System.currentTimeMillis() - time));*/
 
+  }
+}
+    System.out.println("Map elements="+map.size);
+    System.out.println("Collisisons - "+collisions);
+    System.out.println("Max colisisons per element - "+depth);
   }
 
 }
