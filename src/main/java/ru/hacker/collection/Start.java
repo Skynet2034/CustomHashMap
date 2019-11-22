@@ -13,6 +13,7 @@ for (int i=0; i<5_000_000;i++) {
 
 int collisions=0;
 int depth=0;
+int nullCount=0;
 for (int i=0;i<map.massiv.length;i++)
 {
   if (map.massiv[i]!=null)
@@ -24,12 +25,14 @@ for (int i=0;i<map.massiv.length;i++)
       collisions+=n-1;
       if ((n-1)>depth) depth=n-1;
     }
-
   }
+  else nullCount++;
 }
     System.out.println("Map elements="+map.size);
     System.out.println("Collisisons - "+collisions);
-    System.out.println("Max colisisons per element - "+depth);
+    System.out.println("Max collisisons per element - "+depth);
+      System.out.println("Null elements - "+nullCount);
+      System.out.println("Array size - "+map.massiv.length);
   }
 
 }
